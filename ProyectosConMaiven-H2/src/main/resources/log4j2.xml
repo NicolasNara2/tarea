@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Esta es la etiqueta raíz del archivo de configuración.
+  Define la configuración global para Log4j. En este caso, se establece el nivel de
+  registro "status" en "WARN", lo que significa que solo se registrarán eventos de nivel "WARN"
+  o superior.
+
+-->
+<Configuration status="WARN">
+
+    <!--
+    Esta sección define los diferentes destinos (o "apéndices") donde los eventos registrados se enviarán.
+    En este caso, se definen dos apéndices: uno para la consola y otro para un archivo.
+    -->
+    <Appenders>
+        <!--appender 1-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level - %msg%n"/>
+        </Console>
+
+        <!--appender 2
+        El atributo "append" está establecido en "true",
+        lo que significa que se agregarán registros al archivo existente en lugar de sobrescribirlo.
+        -->
+        <File name="File" fileName="src\\log4.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+
+    <!--
+    Esta sección define los registradores específicos y cómo se comportan.
+
+<Logger name="com.sdetadda" level="info" additivity="true">: Define un registrador llamado "com.sdetadda".
+ Este registrador tiene un nivel de registro de "info", lo que significa que se registrarán eventos de nivel
+  "info" o superior. El atributo "additivity" está configurado en "true",
+lo que indica que los eventos registrados por este registrador también se propagarán a los apéndices de
+los registradores padres.
+
+<Root level="info">: Define el registrador raíz.
+El registrador raíz captura todos los eventos que no se
+han dirigido a un registrador específico. En este caso, el nivel de registro se establece en "info", por lo
+ que se registrarán eventos de nivel "info" o superior.
+  Los eventos registrados por el registrador raíz se dirigen al apéndice de archivo definido anteriormente.
+   tendria que llamarlo con logmanager en la clase correspondiente
+    -->
+    <Loggers>
+        <Logger name="prueba" level="info" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="warn">
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
